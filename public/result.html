@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title> Results </title>
+    </head>
+
+
+<body>
+    <div id="results"></div>
+    <a href="index.html"> Back to Form</a>
+    <script>
+        const resultList = document.getElementById('results');
+        new URLSearchParams(window.location.search).forEach((value, key) => {
+            const result = document.createElement('div');
+            result.innerHTML = `${key}: ${value}`;
+            resultList.appendChild(result);
+        });
+    </script>
+
+
+
+</body>
+</html>

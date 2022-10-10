@@ -9,6 +9,7 @@
 <div id="demo"></div>
 
 <script>
+
 const myArr = [0.5, 1.30, 5., 5., 5., 5.];
 const shape = [1, 6];
 const tensorA = tf.tensor(myArr, shape);
@@ -22,7 +23,7 @@ function display(data) {
 
 let model;
 (async function () {
-    model = await tf.loadLayersModel("models/tfjs_Iband/model.json");
+    model = await tf.loadLayersModel("https://firebasestorage.googleapis.com/v0/b/ann-interpolator.appspot.com/o/tfjs_Iband%2Fmodel.json?alt=media&token=e326b7fe-598d-4c1b-995e-7e996c9b92b4");
     console.log("Model loaded");
 })();
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<body>
+
+<h1>TensorFlow JavaScript</h1>
+<h3>Creating a tensor:</h3>
+
+<div id="demo"></div>
+
+<script>
+const myArr = [0.5, 1.30, 5., 5., 5., 5.];
+const shape = [1, 6];
+const tensorA = tf.tensor(myArr, shape, tf.float64);
+
+tensorA.array().then(array => display(array[0]));
+
+// Result: 1,2,3,4 
+function display(data) {
+  document.getElementById("demo").innerHTML = data;
+}
+
+async function load_model() {
+    let model = await tf.loadLayersModel('path/to/model.json')
+    return model;
+}
+
+let model = load_model();
+
+const predict = model.predict(tensorA);
+
+console.log(predict);
+
+</script>
+
+</body>
+</html>

@@ -24,7 +24,7 @@
 
     let model;
     (async function () {
-      model = await tf.loadLayersModel("https://firebasestorage.googleapis.com/v0/b/ann-interpolator.appspot.com/o/model.json?alt=media&token=78a56b6f-45ce-418f-b06a-75932b6c8b7c");
+      model = await tf.loadLayersModel("../models/tfjs_Iband/model.json");
       console.log("Model loaded");
     })();
 

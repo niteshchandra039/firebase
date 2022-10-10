@@ -22,7 +22,7 @@ function display(data) {
 
 let model;
 (async function () {
-    model = await tf.loadLayersModel("http://localhost:5500/models/tfjs_Iband/model.json");
+    model = await tf.loadLayersModel("models/tfjs_Iband/model.json");
     console.log("Model loaded");
 })();
 

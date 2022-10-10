@@ -20,13 +20,15 @@ function display(data) {
   document.getElementById("demo").innerHTML = data;
 }
 
-async function load_model() {
-    let model = await tf.loadLayersModel('path/to/model.json')
+const load_model = async function() {
+    const model = await tf.loadLayersModel('https://github.com/niteshchandra039/firebase/tree/master/models/tfjs_Iband/model.json');
+    console.log(model.summary());
     return model;
+
 }
-
-let model = load_model();
-
+    
+new_model = load_model();
+// console.log(new_model.summary());
 const predict = model.predict(tensorA);
 
 console.log(predict);

@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+
 <body>
 
-<h1>TensorFlow JavaScript</h1>
-<h3>Creating a tensor:</h3>
+  <h1>TensorFlow JavaScript</h1>
+  <h3>Creating a tensor:</h3>
 
-<div id="demo"></div>
+  <div id="demo"></div>
 
-<script>
+  <script>
 
-const myArr = [0.5, 1.30, 5., 5., 5., 5.];
-const shape = [1, 6];
-const tensorA = tf.tensor(myArr, shape);
+    const myArr = [0.5, 1.30, 5., 5., 5., 5.];
+    const shape = [1, 6];
+    const tensorA = tf.tensor(myArr, shape);
 
-tensorA.array().then(array => display(array[0]));
+    tensorA.array().then(array => display(array[0]));
 
-// Result: 1,2,3,4 
-function display(data) {
-  document.getElementById("demo").innerHTML = data;
-}
+    // Result: 1,2,3,4 
+    function display(data) {
+      document.getElementById("demo").innerHTML = data;
+    }
 
-let model;
-(async function () {
-    model = await tf.loadLayersModel("https://firebasestorage.googleapis.com/v0/b/ann-interpolator.appspot.com/o/tfjs_Iband%2Fmodel.json?alt=media&token=e326b7fe-598d-4c1b-995e-7e996c9b92b4");
-    console.log("Model loaded");
-})();
+    let model;
+    (async function () {
+      model = await tf.loadLayersModel("https://firebasestorage.googleapis.com/v0/b/ann-interpolator.appspot.com/o/model.json?alt=media&token=78a56b6f-45ce-418f-b06a-75932b6c8b7c");
+      console.log("Model loaded");
+    })();
 
-const predictions = model.predict(tensorA);
-    
-
-console.log(model.summary());
-console.log(predictions.print());
+    const predictions = model.predict(tensorA);
 
 
-predictions.array().then(array => display(array[0]));
+    console.log(model.summary());
+    console.log(predictions.print());
 
-// Result: 1,2,3,4 
-function display(data) {
-  document.getElementById("demo").innerHTML = data;
-}
 
-</script>
+    predictions.array().then(array => display(array[0]));
+
+    // Result: 1,2,3,4 
+    function display(data) {
+      document.getElementById("demo").innerHTML = data;
+    }
+
+  </script>
 
 </body>
+
 </html>

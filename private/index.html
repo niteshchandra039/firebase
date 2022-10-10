@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> ANN INTERPOLATOR </title>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">  
+    </head>
+    
+<body>
+    <table width="100%" border="0" color="#111111">
+        <tr>
+            <td width="1%"></td>
+            <td width="80%">
+                <table width="100%" border="0">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0">
+                                <tr>
+                                    <td width="25%">
+                                        <img src="Rr_lyrae_ltcrv_en.png" width="149" height="101" alt="RR_Lyrae_variable" />
+                                    </td>
+                                    <td width="75%">
+                                        <h1 style="color:#000000">Light Curve Interpolator </h1>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0">
+                                <tr>
+                                    <td width="25%" valign="top">
+                                        <table width="100%" border="0">
+                                            <tr>
+                                                <td>
+                                                    <a href="index.html">Home</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="about.html">About</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="contact.html">Contact</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="demo.html">Demo</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="75%" valign="top">
+                                        <h2 style="color:#0e1236">Home</h2>
+                                        <form action="result.html" method="GET">
+                                            <div>
+                                            <label for="M0"> M (M_sun):</label>
+                                            <input type="number" id="M0" name="M0" value="0.5" min="0.5" max="0.8" step="any" size="1">
+                                            <label for="Mf"></label>
+                                            <input type="number" id="Mf" name="Mf" value="0.8" min="0.5" max="0.8" step="any" size="1">
+                                            <label for="Md"></label>
+                                            <input type="number" id="Md" name="Md" value="0.1" step="any" size="1">
+                                            </div>
+
+                                            <div>
+                                            <label for="L0">log (L/L_sun) (dex):</label> 
+                                            <input type="number" id="L0" name="L0" value="1.5" min="1.49" max="2.02" step="any">
+                                            <label for="Lf"></label> 
+                                            <input type="number" id="Lf" name="Lf" value="1.6" min="1.49" max="2.02" step="any">
+                                            <label for="Ld"></label> 
+                                            <input type="number" id="Ld" name="Ld" value="0.1">
+                                            
+                                            <div>
+                                            <label for="T0">Teff(K):</label> 
+                                            <input type="number" id="T0" name="T0" value="6500" min="5200" max="7200" step="any">
+                                            <label for="Tf"></label> 
+                                            <input type="number" id="Tf" name="Tf" value="7000"  min="5200" max="7200" step="any">
+                                            <label for="Td"></label> 
+                                            <input type="number" id="Td" name="Td" value="100" step="any">
+                                            </div>
+                                            
+                                            <div>
+                                            <label for="X0">X (dex):</label> 
+                                            <input type="number" id="X0" name="X0" value="0.71" min="0.71" max="0.7549" step="any">
+                                            <label for="Xf"></label> 
+                                            <input type="number" id="Xf" name="Xf" value="0.75" min="0.71" max="0.7549" step="any">
+                                            <label for="Xd"></label> 
+                                            <input type="number" id="Xd" name="Xd" value="0.01" step="0.00001">
+                                            </div>
+
+                                            <div>
+                                            <label for="Z0">Z (dex):</label> 
+                                            <input type="number" id="Z0" name="Z0" value="0.001" min="0.0001" max="0.02" step="any">
+                                            <label for="Zf"></label> 
+                                            <input type="number" id="Zf" name="Zf" value="0.001" min="0.0001" max="0.02" step="any">
+                                            <label for="Zd"></label> 
+                                            <input type="number" id="Zd" name="Zd" value="0.01" step="any">
+                                            </div> 
+
+                                            <button type="submit">Submit</button>
+                                            <button type="reset">Reset</button>
+                                        </form>
+                                        <p></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="20%"></td>
+        </tr>
+
+
+
+
+<tr>
+    <td colspan="12" bgcolor="#b5dcb3">
+    <center>
+    Copyright © 2022 niteshchandra039.github.io
+    </center>
+    </td>
+</tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title> Results </title>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+
+    </head>
+
+
+<body>
+    <div id="results"></div>
+    <a href="index.html"> Back to Form</a>
+    <script>
+        const resultList = document.getElementById('results');
+        new URLSearchParams(window.location.search).forEach((value, key) => {
+            const result = document.createElement('div');
+            result.innerHTML = `${key}: ${value}`;
+            resultList.appendChild(result);
+        });
+    </script>
+
+    <!-- tensorflowjs_converter --input_format keras model.h5 model -->
+    
+    <script>
+        // console.log("started");
+        // async function loadModel(){
+        //     console.log("Loading model...");
+        //     model = await tf.loadLayersModel('../models/tfjs_Iband/model.json');
+        //     console.log("Model loaded.");
+        //     const y = model.predict(tf.tensor([[1, 6, 12, 5, 5, 6]], 'float64'));
+        //     console.log(`Prediction: ${y.dataSync()[0]}`);
+        //     return model;
+        // }
+        // loadModel();
+
+
+        // const model = tf.loadLayersModel('../models/tfjs_Iband/model.json');
+        // const example = [0.5, 1.4, 5, 5, 5, 5];  // for example
+        // const prediction = model.predict(tf.tensor2d([example], [1, 6]));
+        // console.log(example, prediction);
+
+    </script>
+
+
+
+</body>
+</html>

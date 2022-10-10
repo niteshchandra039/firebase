@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+    "Predict"
+{% endblock title %}
+{% block body %} 
+<h2> Predict the I band light curves of RRab stars</h2>
+<h4> Please give the values of Mass, Luminosity, Temperature, X, Z, and Log(P) in the specified format. </h4>
+
+
+<div class="container">
+    <form action="/predict.html" method="POST">
+        <label for="m"> Mass </label><br>
+        <input type="number" id='m' step='any' name="m" value="0.51"><br><br>
+
+        <label for="l"> Luminosity </label><br>
+        <input type="number" id="l" step='any' name="l" value="1.5"><br><br>
+
+        <label for="t"> Temperature </label><br>
+        <input type="number" id="t" step='any' name="t" value="6900"><br><br>
+
+        <label for="X"> X </label><br>
+        <input type="number" id="X" step='any' name="X" value="0.7512"><br><br>
+
+        <label for="Z"> Z </label><br>
+        <input type="number" id="Z" step='any' name="Z" value="0.0015"><br><br>
+
+        <label for="p"> Period </label><br>
+        <input type="number" id="p" step='any' name="p" value="0.5"><br><br>
+
+        <input type="submit" value="Predict">
+        <input type="reset" value="Reset"><br><br>
+    </form>
+</div> 
+
+
+
+
+<!-- <div class="container">
+      <form action="/predict.html" method="post">
+        <label for="MLTXZLP"> MLTXZLP </label>
+        <input type="list" id="MLTXZLP" name="MLTXZLP" value="0.51,1.5,6900,0.7512,0.0015,0.5">
+        <input type="submit" value="Predict">
+      </form>
+    </div>
+    <br> -->
+
+{% endblock body %}

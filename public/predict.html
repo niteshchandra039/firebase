@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+    "Predict"
+{% endblock title %}
+{% block body %} 
+    
+    <div class="container">
+        <img src="/plot.png" alt="ANN Predicted light Curve"> <br>
+        
+    <div >
+        <a class="btn btn-primary position-relative" href="/plot.png" role="button">Download</a>
+        <a class="btn btn-primary position-relative" href="{{ url_for('iband') }}" role="button">Back</a>
+    </div>
+</div>    
+
+{% endblock body %}

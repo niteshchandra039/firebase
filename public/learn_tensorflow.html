@@ -11,7 +11,7 @@
 <script>
 const myArr = [0.5, 1.30, 5., 5., 5., 5.];
 const shape = [1, 6];
-const tensorA = tf.tensor(myArr, shape, tf.float64);
+const tensorA = tf.tensor(myArr, shape);
 
 tensorA.array().then(array => display(array[0]));
 
@@ -20,18 +20,25 @@ function display(data) {
   document.getElementById("demo").innerHTML = data;
 }
 
-const load_model = async function() {
-    const model = await tf.loadLayersModel('https://github.com/niteshchandra039/firebase/tree/master/models/tfjs_Iband/model.json');
-    console.log(model.summary());
-    return model;
+let model;
+(async function () {
+    model = await tf.loadLayersModel("http://localhost:5500/models/tfjs_Iband/model.json");
+    console.log("Model loaded");
+})();
 
-}
+const predictions = model.predict(tensorA);
     
-new_model = load_model();
-// console.log(new_model.summary());
-const predict = model.predict(tensorA);
 
-console.log(predict);
+console.log(model.summary());
+console.log(predictions.print());
+
+
+predictions.array().then(array => display(array[0]));
+
+// Result: 1,2,3,4 
+function display(data) {
+  document.getElementById("demo").innerHTML = data;
+}
 
 </script>
 

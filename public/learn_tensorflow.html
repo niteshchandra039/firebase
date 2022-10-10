@@ -1,49 +1,156 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title> ANN Interpolator</title>
+  </head>
+  
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(163, 164, 238); font-weight: bold;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">ANN Interpolator </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="demo.html">Demo</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Predict
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="iband.html">I band</a></li>
+              <li><a class="dropdown-item" href="#">V band</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 
-  <h1>TensorFlow JavaScript</h1>
-  <h3>Creating a tensor:</h3>
 
-  <div id="demo"></div>
+
+  <h2>TensorFlow.js</h2>
+  <p id="message">Model is training!</p>
+
+  <div id="myPlot" style="width:100%;max-width:700px"></div>
+  <div id="demo" style="width:100%;max-width:700px"></div>
 
   <script>
 
-    const myArr = [0.5, 1.30, 5., 5., 5., 5.];
-    const shape = [1, 6];
-    const tensorA = tf.tensor(myArr, shape);
+    // const myArr = [0.5, 1.30, 5., 5., 5., 5.];
+    // const shape = [1, 6];
+    // const tensorA = tf.tensor(myArr, shape);
 
-    tensorA.array().then(array => display(array[0]));
+    // tensorA.array().then(array => display(array[0]));
 
     // Result: 1,2,3,4 
-    function display(data) {
-      document.getElementById("demo").innerHTML = data;
-    }
+    // function display(data) {
+    //   document.getElementById("demo").innerHTML = data;
+    // }
 
     let model;
     (async function () {
-      model = await tf.loadLayersModel("../models/tfjs_Iband/model.json");
+      model = await tf.loadLayersModel("./models/tfjs_Iband/model.json");
       console.log("Model loaded");
     })();
 
-    const predictions = model.predict(tensorA);
+    function predict(input) {
+      const output = model.predict(input);
+      output.print();
+      return output;
+    }
 
+    const input_ = tf.tensor([[0.5, 1.30, 5., 5., 5., 5.]]);
+    const output_ = predict(input_);
 
-    console.log(model.summary());
-    console.log(predictions.print());
+    console.log(output_);
 
+    output_.array().then(array => display(array[0]));
 
-    predictions.array().then(array => display(array[0]));
-
-    // Result: 1,2,3,4 
     function display(data) {
       document.getElementById("demo").innerHTML = data;
     }
 
+
+
   </script>
 
-</body>
 
+
+  <!-- <script>
+  // Create Training Data
+  const xs = tf.tensor([[0, 1, 2, 3, 4, 5]]);
+  const ys = xs.mul(1.2).add(5);
+  
+  // Define a Linear Regression Model
+  let model;
+    (async function () {
+      model = await tf.loadLayersModel("./models/tfjs_Iband/model.json");
+      console.log("Model loaded");
+    })();
+  
+  // Use the Model
+  function myFunction() {
+      let result = model.predict(xs);
+      result.data().then(y => {
+        xArr.push(xs);
+        yArr.push(y);
+       {plot(xArr, yArr)};
+      });
+    }
+    document.getElementById('message').style.display="none";
+
+  
+  function plot(xArr, yArr) {
+  // Define Data
+  const data = [{x:xArr, y:yArr, mode:"markers",type:"scatter"}];
+  
+  // Define Layout
+  const layout = {
+    xaxis: {range: [0, 10]},
+    yaxis: {range: [0, 20]},  
+  };
+  
+  // Display Plot
+  Plotly.newPlot("myPlot", data, layout);
+  }
+  </script> -->
+
+
+
+  <footer style="background-color: rgb(171, 192, 238);">
+    <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+            <p class="text-center">© 2021 - ANN Interpolator</p>
+        </div>
+        </div>
+    </div>
+</footer>
+</body>
 </html>

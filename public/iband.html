@@ -7,9 +7,15 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
 
     <title> ANN Interpolator</title>
   </head>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+
+
+
   <body>
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(163, 164, 238); font-weight: bold;">
         <div class="container-fluid">
@@ -66,7 +72,7 @@
 
 
 <div class="container">
-    <form action="predict.html" method="get">
+    <form id="input-params" action="/" method="get">
         <label for="m"> Mass </label><br>
         <input type="number" id='m' step='any' name="m" value="0.51"><br><br>
 
@@ -90,6 +96,51 @@
     </form>
 </div>
 
+<div id="result"></div>
+<div id="Predict"></div>
+
+
+<div id="myDiv"></div>
+
+<script>
+    let model;
+    (async function () {
+      model = await tf.loadLayersModel("./models/tfjs_Iband/model.json");
+      console.log("Model loaded");
+    })();
+
+
+    document.getElementById("input-params").addEventListener("submit", function(event){
+        event.preventDefault();
+        var m = document.getElementById("m").value;
+        var l = document.getElementById("l").value;
+        var t = document.getElementById("t").value;
+        var X = document.getElementById("X").value;
+        var Z = document.getElementById("Z").value;
+        var p = document.getElementById("p").value;
+        // var url = "predict.html?m=" + m + "&l=" + l + "&t=" + t + "&X=" + X + "&Z=" + Z + "&p=" + p;
+        // window.location.href = url;
+        const myArr = [m, l, t, X, Z, p];
+
+        const shape = [1, 6];
+        const tensorA = tf.tensor(myArr, shape, 'float32');
+        const prediction = model.predict(tensorA);
+        // var trace1 = {
+        //                 x: tf.linspace(0, 1, 1000).arraySync(),
+        //                 y: prediction[0],
+        //                 type: 'scatter'
+        //               };  
+
+        //   var data = [trace1];
+
+        //   Plotly.newPlot('myDiv', data);
+        document.getElementById("result").innerHTML = 'Input params:' + tensorA.toString(); 
+        document.getElementById("Predict").innerHTML = 'Prediction:'+ prediction.arraySync();
+    });
+
+
+
+</script>
 
 
 
@@ -103,6 +154,11 @@
       </form>
     </div>
     <br> -->
+
+
+
+
+
 
     <footer style="background-color: rgb(171, 192, 238);">
         <div class="container">

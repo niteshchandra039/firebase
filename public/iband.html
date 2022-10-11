@@ -121,21 +121,27 @@
         // var url = "predict.html?m=" + m + "&l=" + l + "&t=" + t + "&X=" + X + "&Z=" + Z + "&p=" + p;
         // window.location.href = url;
         const myArr = [m, l, t, X, Z, p];
-
+        const myScaledArr = [(m - 0.6052238805970149)/0.07728331690286158,
+                             (l - 1.7816044776119402)/0.14408240379875886, 
+                             (t - 6324.925373134329)/357.06044111597606, 
+                             (X - 0.7437242537313433)/0.012968669529618546, 
+                             (Z - 0.005029477611940301)/0.005628716724611099, 
+                             (Math.log10(p) + 0.07894029850746269)/0.17069730830507393 ];
         const shape = [1, 6];
-        const tensorA = tf.tensor(myArr, shape, 'float32');
+        const tensorA = tf.tensor(myScaledArr, shape, 'float32');
         const prediction = model.predict(tensorA);
-        // var trace1 = {
-        //                 x: tf.linspace(0, 1, 1000).arraySync(),
-        //                 y: prediction[0],
-        //                 type: 'scatter'
-        //               };  
+        var trace1 = {
+                        x: tf.linspace(0, 1, 1000).arraySync(),
+                        y: prediction,
+                        type: 'scatter'
+                      };  
 
-        //   var data = [trace1];
+          var data = [trace1];
 
-        //   Plotly.newPlot('myDiv', data);
         document.getElementById("result").innerHTML = 'Input params:' + tensorA.toString(); 
         document.getElementById("Predict").innerHTML = 'Prediction:'+ prediction.arraySync();
+        Plotly.newPlot('myDiv', data);
+
     });
 
 

@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
 
     <title> ANN Interpolator</title>
   </head>
@@ -101,6 +102,7 @@
 
 
 <div id="myDiv"></div>
+<div id="demo"></div>
 
 <script>
     let model;
@@ -130,25 +132,42 @@
         const shape = [1, 6];
         const tensorA = tf.tensor(myScaledArr, shape, 'float32');
         const prediction = model.predict(tensorA);
+        const predictionReshape = prediction.reshape([1000,])
+        const predictionArray = predictionReshape.arraySync();
+        const phase = tf.linspace(0, 1, 1000).arraySync();
+
+        
+
+
+        // for (let i = 0; i < 10; i++) {
+        //   serie1[i] = {x: i, y: predictionArray[i]};
+        //   console.log(serie1);
+
+        // }
+
         var trace1 = {
-                        x: tf.linspace(0, 1, 1000).arraySync(),
-                        y: prediction,
-                        type: 'scatter'
-                      };  
+          x: phase,
+          y: predictionArray,
+          type: 'scatter'
+        };
 
-          var data = [trace1];
+        var data_new = [trace1];
 
-        document.getElementById("result").innerHTML = 'Input params:' + tensorA.toString(); 
-        document.getElementById("Predict").innerHTML = 'Prediction:'+ prediction.arraySync();
-        Plotly.newPlot('myDiv', data);
+
+        Plotly.newPlot('myDiv', data_new);
+
+
+        // const data = {values: [serie1], series}
+        // tfvis.render.linechart(surface, data, 
+        // {xLabel: 'Phase', yLabel: 'Magnitude'});
+
+        // document.getElementById("result").innerHTML = 'Input params:' + tensorA.toString(); 
+        // document.getElementById("Predict").innerHTML = 'Prediction:'+ prediction.arraySync();
+        // Plotly.newPlot('myDiv', data);
 
     });
 
-
-
 </script>
-
-
 
 
 

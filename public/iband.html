@@ -142,6 +142,80 @@
 
   </script>
 
+
+
+    <div class="container">
+      <h2 style="background-color: aqua;"> Downloading Light curves in bulk </h2>
+
+      <form id="input-file" action="/" method="post">
+        <label for="file"> Select the file containing the parameters of the RRab stars: </label>
+        <input type="file" id="input" name="file" accept=".dat"> <br \>
+        <input type="submit" value="submit">
+      </form>
+
+
+      <script>
+        document.getElementById("input-file").addEventListener("submit", function (event) {
+          event.preventDefault();
+          var file = document.getElementById("input").files[0];
+          var reader = new FileReader();
+          reader.readAsText(file);
+          console.log(reader.result);
+          reader.onload = function () {
+            var lines = reader.result.split('\n');
+            var data = [];
+            for (var i = 0; i < lines.length; i++) {
+              var line = lines[i].split(',');
+              var m = line[0];
+              var l = line[1];
+              var t = line[2];
+              var X = line[3];
+              var Z = line[4];
+              var p = line[5];
+              const myArr = [m, l, t, X, Z, p];
+              const myScaledArr = [(myArr[0] - 0.6052238805970149) / 0.07728331690286158, (myArr[1] - 1.7816044776119402) / 0.14408240379875886, (myArr[2] - 6324.925373134329) / 357.06044111597606, (myArr[3] - 0.7437242537313433) / 0.012968669529618546, (myArr[4] - 0.005029477611940301) / 0.005628716724611099, (Math.log10(myArr[5]) + 0.07894029850746269) / 0.17069730830507393];
+              const tensorA = tf.tensor(myScaledArr, [1, 6], 'float32');
+              var prediction = model.predict(tensorA);
+              prediction = prediction.reshape([1000,]).arraySync();
+              const phase = tf.linspace(0, 2, 2000).arraySync();
+              var pred2d = tf.tensor([prediction, prediction]);
+              pred2d = pred2d.reshape([2000,]).arraySync();
+              data.push({
+                x: phase,
+                y: pred2d,
+                type: 'scatter'
+              });
+            }
+            console.log(data);
+            var layout = {
+              title: 'I band light curve',
+              xaxis: {
+                title: 'Phase',
+                showgrid: false,
+                zeroline: false
+              },
+              yaxis: {
+                title: 'Magnitude',
+                showline: false,
+                zeroline: false,
+                autorange: 'reversed'
+              }
+            };
+            Plotly.newPlot('myDiv', data, layout);
+          };
+        });
+
+
+
+
+
+      </script>
+
+
+
+    </div>
+
+
   <!--footer-->
   <div id="footer-placeholder">
 

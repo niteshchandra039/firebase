@@ -1,110 +1,119 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title> ANN Interpolator</title>
-  </head>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
+  <title> ANN Interpolator</title>
+</head>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 
 
 
-  <body>
-      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(163, 164, 238); font-weight: bold;">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">ANN Interpolator </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(163, 164, 238); font-weight: bold;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">ANN Interpolator </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="demo.html">Demo</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Predict
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="iband.html">I band</a></li>
+              <li><a class="dropdown-item" href="#">V band</a></li>
+              <li>
+                <hr class="dropdown-divider">
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="demo.html">Demo</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Predict
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="iband.html">I band</a></li>
-                  <li><a class="dropdown-item" href="#">V band</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 
 
 
-    <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
 
-<h2> Predict the I band light curves of RRab stars</h2>
-<h4> Please give the values of Mass, Luminosity, Temperature, X, Z, and Log(P) in the specified format. </h4>
+  <h2> Predict the I band light curves of RRab stars</h2>
 
 
-<div class="container">
+  <div class="container mt-5">
+    Please give the values of Mass, Luminosity, Temperature, X, Z, and Log(P) in the specified format.
+
+    <style>
+      label {display: inline-block; width: 210px; text-align: right; }
+
+    </style>
+
     <form id="input-params" action="/" method="get">
-        <label for="m"> Mass </label><br>
-        <input type="number" id='m' step='any' name="m" value="0.51"><br><br>
+      <label for="m"> Mass: </label>
+      <input type="number" id='m' step='any' name="m" value="0.61"><br \>
 
-        <label for="l"> Luminosity </label><br>
-        <input type="number" id="l" step='any' name="l" value="1.5"><br><br>
+      <label for="l"> Luminosity: </label>
+      <input type="number" id="l" step='any' name="l" value="1.54"><br \>
 
-        <label for="t"> Temperature </label><br>
-        <input type="number" id="t" step='any' name="t" value="6900"><br><br>
+      <label for="t"> Temperature: </label>
+      <input type="number" id="t" step='any' name="t" value="6900"><br \>
 
-        <label for="X"> X </label><br>
-        <input type="number" id="X" step='any' name="X" value="0.7512"><br><br>
+      <label for="X"> X: </label>
+      <input type="number" id="X" step='any' name="X" value="0.74832"><br \>
 
-        <label for="Z"> Z </label><br>
-        <input type="number" id="Z" step='any' name="Z" value="0.0015"><br><br>
+      <label for="Z"> Z: </label>
+      <input type="number" id="Z" step='any' name="Z" value="0.00668"><br \>
 
-        <label for="p"> Period </label><br>
-        <input type="number" id="p" step='any' name="p" value="0.5"><br><br>
+      <label for="p"> Period: </label>
+      <input type="number" id="p" step='any' name="p" value="0.38"><br \>
 
-        <input type="submit" value="Predict">
-        <input type="reset" value="Reset"><br><br>
+      <input type="submit" value="Predict">
+      <input type="reset" value="Reset"><br \>
     </form>
-</div>
-
-<div id="result"></div>
-<div id="Predict"></div>
+  </div>
 
 
-<div id="myDiv"></div>
-<div id="demo"></div>
+  <div class="container mt-5" id="myDiv"></div>
 
-<script>
+  <script>
+
     let model;
     (async function () {
       model = await tf.loadLayersModel("./models/tfjs_Iband/model.json");
@@ -112,88 +121,64 @@
     })();
 
 
-    document.getElementById("input-params").addEventListener("submit", function(event){
+    document.getElementById("input-params").addEventListener("submit", function (event) {
+      event.preventDefault();
+      var m = document.getElementById("m").value;
+      var l = document.getElementById("l").value;
+      var t = document.getElementById("t").value;
+      var X = document.getElementById("X").value;
+      var Z = document.getElementById("Z").value;
+      var p = document.getElementById("p").value;
+      const myArr = [m, l, t, X, Z, p];
+      const myScaledArr = [(myArr[0] - 0.6052238805970149) / 0.07728331690286158, (myArr[1] - 1.7816044776119402) / 0.14408240379875886, (myArr[2] - 6324.925373134329) / 357.06044111597606, (myArr[3] - 0.7437242537313433) / 0.012968669529618546, (myArr[4] - 0.005029477611940301) / 0.005628716724611099, (Math.log10(myArr[5]) + 0.07894029850746269) / 0.17069730830507393];
+      const tensorA = tf.tensor(myScaledArr, [1, 6], 'float32');
+      var prediction = model.predict(tensorA);
+      prediction = prediction.reshape([1000,]).arraySync();
+      const phase = tf.linspace(0, 2, 2000).arraySync();
+      var pred2d = tf.tensor([prediction, prediction]);
+      pred2d = pred2d.reshape([2000,]).arraySync();
+
+      var data_new = [{
+        x: phase,
+        y: pred2d,
+        type: 'scatter'
+      }];
+
+      var layout = {
+        title: 'I band light curve',
+        xaxis: {
+          title: 'Phase',
+          showgrid: false,
+          zeroline: false
+        },
+        yaxis: {
+          title: 'Magnitude',
+          showline: false,
+          zeroline: false,
+          autorange: 'reversed'
+        }
+      };
+      Plotly.newPlot('myDiv', data_new, layout);
+
+      document.getElementById("input-params").addEventListener("reset", function (event) {
         event.preventDefault();
-        var m = document.getElementById("m").value;
-        var l = document.getElementById("l").value;
-        var t = document.getElementById("t").value;
-        var X = document.getElementById("X").value;
-        var Z = document.getElementById("Z").value;
-        var p = document.getElementById("p").value;
-        // var url = "predict.html?m=" + m + "&l=" + l + "&t=" + t + "&X=" + X + "&Z=" + Z + "&p=" + p;
-        // window.location.href = url;
-        const myArr = [m, l, t, X, Z, p];
-        const myScaledArr = [(m - 0.6052238805970149)/0.07728331690286158,
-                             (l - 1.7816044776119402)/0.14408240379875886, 
-                             (t - 6324.925373134329)/357.06044111597606, 
-                             (X - 0.7437242537313433)/0.012968669529618546, 
-                             (Z - 0.005029477611940301)/0.005628716724611099, 
-                             (Math.log10(p) + 0.07894029850746269)/0.17069730830507393 ];
-        const shape = [1, 6];
-        const tensorA = tf.tensor(myScaledArr, shape, 'float32');
-        const prediction = model.predict(tensorA);
-        const predictionReshape = prediction.reshape([1000,])
-        const predictionArray = predictionReshape.arraySync();
-        const phase = tf.linspace(0, 1, 1000).arraySync();
-
-        
-
-
-        // for (let i = 0; i < 10; i++) {
-        //   serie1[i] = {x: i, y: predictionArray[i]};
-        //   console.log(serie1);
-
-        // }
-
-        var trace1 = {
-          x: phase,
-          y: predictionArray,
-          type: 'scatter'
-        };
-
-        var data_new = [trace1];
-
-
-        Plotly.newPlot('myDiv', data_new);
-
-
-        // const data = {values: [serie1], series}
-        // tfvis.render.linechart(surface, data, 
-        // {xLabel: 'Phase', yLabel: 'Magnitude'});
-
-        // document.getElementById("result").innerHTML = 'Input params:' + tensorA.toString(); 
-        // document.getElementById("Predict").innerHTML = 'Prediction:'+ prediction.arraySync();
-        // Plotly.newPlot('myDiv', data);
+        document.getElementById("myDiv").innerHTML = "";
+      });
 
     });
 
-</script>
+  </script>
 
-
-
-<!-- <div class="container">
-      <form action="/predict.html" method="post">
-        <label for="MLTXZLP"> MLTXZLP </label>
-        <input type="list" id="MLTXZLP" name="MLTXZLP" value="0.51,1.5,6900,0.7512,0.0015,0.5">
-        <input type="submit" value="Predict">
-      </form>
-    </div>
-    <br> -->
-
-
-
-
-
-
-    <footer style="background-color: rgb(171, 192, 238);">
-        <div class="container">
-            <div class="row">
-            <div class="col-md-12">
-                <p class="text-center">© 2021 - ANN Interpolator</p>
-            </div>
-            </div>
+  <footer style="background-color: rgb(171, 192, 238);">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center">© 2021 - ANN Interpolator</p>
         </div>
-    </footer>
-    
-    </body>
-    </html>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

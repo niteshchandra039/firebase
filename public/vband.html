@@ -51,7 +51,8 @@
 
   <div class="container mt-5">
     Please give the values of Mass, Luminosity, Temperature, X, Z, and Log(P) in the specified format. <br>
-    It should be noted that the ANN model is an interpolator and can only predict the light curves of RRab stars with parameters within the original grid of models. <br>
+    It should be noted that the ANN model is an interpolator and can only predict the light curves of RRab stars with
+    parameters within the original grid of models. <br>
     The range of parameters are provided in front of the input boxes. <br>
     <br \>
 
@@ -68,22 +69,27 @@
     <form id="input-params" action="/" method="get">
       <label for="m"> Mass: </label>
       <input type="number" id='m' step='any' name="m" value="0.61" min="0.5" max="0.8" step="any"> M<sub>&#9737</sub>
-      <br \>
+      [0.5 - 0.8 M<sub>&#9737</sub> ] <br \>
 
       <label for="l"> Luminosity [log (L/L<sub>&#9737</sub>)]: </label>
-      <input type="number" id="l" step='any' name="l" value="1.54" min="1.49" max="2.02" step="any"> dex <br \>
+      <input type="number" id="l" step='any' name="l" value="1.54" min="1.49" max="2.02" step="any"> dex [1.49 - 2.02
+      dex ] <br \>
 
       <label for="t"> Temperature (T<sub>eff</sub> ): </label>
-      <input type="number" id="t" step='any' name="t" value="6900" min="5200" max="7200" step="any"> K <br \>
+      <input type="number" id="t" step='any' name="t" value="6900" min="5200" max="7200" step="any"> K [5200 - 7200
+      K]<br \>
 
       <label for="X"> X: </label>
-      <input type="number" id="X" step='any' name="X" value="0.74832" min="0.71" max="0.7549" step="any"> dex <br \>
+      <input type="number" id="X" step='any' name="X" value="0.74832" min="0.71" max="0.7549" step="any"> dex [0.71 -
+      0.7549 dex] <br \>
 
       <label for="Z"> Z: </label>
-      <input type="number" id="Z" step='any' name="Z" value="0.00668" min="0.0001" max="0.02" step="any"> dex <br \>
+      <input type="number" id="Z" step='any' name="Z" value="0.00668" min="0.0001" max="0.02" step="any"> dex [0.0001 -
+      0.02 dex]<br \>
 
       <label for="p"> Period: </label>
-      <input type="number" id="p" step='any' name="p" value="0.38" min="0.01" max="2.2" step="any"> day <br \>
+      <input type="number" id="p" step='any' name="p" value="0.38" min="0.01" max="2.2" step="any"> day [0.1 - 2.0
+      day]<br \>
 
       <input type="submit" value="Predict">
       <input type="reset" value="Reset"><br \>

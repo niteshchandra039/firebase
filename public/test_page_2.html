@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.0.0/papaparse.min.js"></script>
+  <script>
+    let model;
+    (async function () {
+        model = await tf.loadLayersModel("./models/tfjs_Iband/model.json");
+        console.log("Model loaded");
+    })();
+
+    async function runPrediction(data) {
+        let predicted_lc = [];
+        for (var i = 0; i < data.length; i++) {
+            const myArr = data[i];
+            const myScaledArr = [(myArr[0] - 0.6052238805970149) / 0.07728331690286158, (myArr[1] - 1.7816044776119402) / 0.14408240379875886, (myArr[2] - 6324.925373134329) / 357.06044111597606, (myArr[3] - 0.7437242537313433) / 0.012968669529618546, (myArr[4] - 0.005029477611940301) / 0.005628716724611099, (Math.log10(myArr[5]) + 0.07894029850746269) / 0.17069730830507393];
+            const tensorA = tf.tensor(myScaledArr, [1, 6], 'float32');
+            var prediction = model.predict(tensorA);
+            prediction = prediction.reshape([1000,]).arraySync();
+            predicted_lc.push(prediction);
+        }
+        return predicted_lc;
+    }
+
+    document.getElementById("input-file").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var file = document.getElementById("input").files[0];
+        Papa.parse(file, {
+            header: false,
+            complete: async function (results) {
+                let data = results.data;
+                data.pop();  // remove the last empty row
+                let predicted_lc = await runPrediction(data);
+
+                // Create the CSV data as a string
+                var csvContent = "data:text/csv;charset=utf-8,";
+                for (var i = 0; i < predicted_lc.length; i++) {
+                    csvContent += predicted_lc[i].join(",") + "\n";
+                }
+                console.log(csvContent);
+            }
+        });
+    });
+    </script>
+
+    <h1>
+        Predict the I band light curves of RRab stars
+    </h1>
+
+    <div class="container">
+        <form id="input-file" action="/" method="post">
+            <label for="file"> Select the file containing the parameters of the RRab stars: </label>
+            <input type="file" id="input" name="file" accept=".dat"> <br \>
+            <input type="submit" value="submit"> <input type="reset" value="reset"> <br \> <br \>
+            <input type="submit" id="download" name="download" value="download">
+            <br><br \>
+
+        </form>
+
+</head>
+

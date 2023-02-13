@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <script>
+      function searchFunction() {
+        // Get the input value
+        var input = document.getElementById("searchInput").value;
+        input = input.toLowerCase();
+
+        // Get all the list items
+        var listItems = document.getElementsByTagName("li");
+
+        // Loop through the list items
+        for (var i = 0; i < listItems.length; i++) {
+          var text = listItems[i].textContent;
+          text = text.toLowerCase();
+
+          // If the input value is not found in the text of the list item, hide it
+          if (!text.includes(input)) {
+            listItems[i].style.display = "none";
+          } else {
+            listItems[i].style.display = "block";
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search">
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li>Item 4</li>
+      <li>Item 5</li>
+    </ul>
+  </body>
+</html>

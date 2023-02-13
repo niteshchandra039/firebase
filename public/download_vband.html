@@ -87,22 +87,21 @@
 
     <div class="container">
         
-    <h2> Generate and download the I band light curves of RRab stars</h2>
-    <p> This page allows you to generate the light curves of RRab stars. The light curves are generated using the ANN interpoltors that were trained in Kumar et al. (2023). The light curves are generated for the I band.</p>
+    <h2> Generate and download the V band light curves of RRab stars</h2>
+    <p> This page allows you to generate the light curves of RRab stars. The light curves are generated using the ANN interpoltors that were trained in Kumar et al. (2023). The light curves are generated for the V band.</p>
         <form id="input-file" action="/" method="post">
             <label for="file"> Select the file containing the parameters of the RRab stars: </label> <br \> <br \>
             The input file should contain six columns each contains the following parameters in the given order: <br \>
-            Mass (<tt>M/M<sub>&#8857</sub></tt>), Luminosity (<tt>log L/L<sub>&#8857</sub></tt>), <tt>T<sub>eff</sub></tt> (in K), hydrogen abundance ratio (<tt>X</tt>), metal abundance ratio <tt>Z</tt>, and Period (in days). A sample input file is provided <a href="test_files/test_params.dat"> here</a>.<br \>
+            Mass (<tt>M/M<sub>&#8857</sub></tt>), Luminosity (<tt>log L/L<sub>&#8857</sub></tt>), <tt>T<sub>eff</sub></tt> (in K), hydrogen abundance ratio (<tt>X</tt>), metal abundance ratio <tt>Z</tt>, and Period (in days). A sample input file is provided <a href="test_files/test_params.csv"> here</a>.<br \>
               <br \> <br \>
-            <input type="file" id="input" name="file" accept=".dat">Accepted file formats: ".dat". <br \> <br \> <br \>
-            <input type="submit" value="Generate and Download"> <input type="reset" value="reset"> <br \>
+            <input type="file" id="input" name="file" accept=".csv" >Accepted file formats: ".csv". <br \> <br \> <br \>
+            <input type="submit" id="I" value="Generate and Download"> <input type="reset" value="reset"> <br \>
         </form>
 
         <script>
-
             let model;
             (async function () {
-                model = await tf.loadLayersModel("./models/tfjs_Iband/model.json");
+                model = await tf.loadLayersModel("./models/tfjs_Vband/model.json");
                 console.log("Model loaded");
             })();
 
@@ -152,7 +151,7 @@
                     var encodedUri = encodeURI(csvContent);
                     var link = document.createElement("a");
                     link.setAttribute("href", encodedUri);
-                    link.setAttribute("download", "predictions.csv");
+                    link.setAttribute("download", "Vband_generated_lc.csv");
                     document.body.appendChild(link);
                     link.click();
 
@@ -162,7 +161,7 @@
             document.getElementById("input-file").addEventListener("reset", function (event) {
                 event.preventDefault();
                 document.getElementById("input").value = "";
-                Plotly.purge('myDiv');
+
             });
         
         </script>

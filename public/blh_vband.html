@@ -1,225 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <title>V-Band Interpolator</title>
 
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
-  <title> Vband Interpolator </title>
     <style>
-      form {
-        display: table;
-        /* flex-direction: column; */
-        align-items: center;
-        width: 90%;
-        margin: 0 auto;
-        padding: 1em;
-        border: 1px solid gray;
-        border-radius: 10px;
-      }
-
-      input[type="number"] {
-        width: 50%;
-        padding: 0.5em;
-        margin-bottom: 1em;
-        border-radius: 5px;
-        border: 1px solid gray;
-        text-align: center;
-      }
-
-      input[type="submit"],
-      input[type="reset"] {
-        width: 100%;
-        padding: 0.5em;
-        margin-bottom: 1em;
-        border-radius: 5px;
-        border: 1px solid black;
-        background-color: lightgray;
-        cursor: pointer;
-      }
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-
-
-
 <body>
-  <!--Navigation bar-->
-  <div id="nav-placeholder">
-  </div>
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+    <script>$(function() { $("#nav-placeholder").load("nav.html"); });</script>
 
-  <script>
-    $(function(){
-      $("#nav-placeholder").load("nav.html");
-    });
-    </script>
-    <!--end of Navigation bar-->
+    <div class="container mt-4">
+        <h2>Generate V-Band Light Curves of BL Her Stars</h2>
+        <p class="text-muted text-center">
+            Enter the stellar parameters to interpolate the V-band light curve. The model is trained within a specific range, so predictions are valid only for parameters within the given limits.
+        </p>
 
+        <form id="input-params">
+            <label for="m">Mass (M<sub>⊙</sub>) [0.5 - 0.8]:</label>
+            <input type="number" id="m" class="form-control" value="0.61" min="0.5" max="0.8" step="any">
 
+            <label for="l">Luminosity (dex) [1.49 - 2.02]:</label>
+            <input type="number" id="l" class="form-control" value="1.54" min="1.49" max="2.02" step="any">
 
-  <!-- Optional JavaScript; choose one of the two! -->
+            <label for="t">Temperature (K) [5200 - 7200]:</label>
+            <input type="number" id="t" class="form-control" value="6900" min="5200" max="7200" step="any">
 
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+            <label for="X">X (dex) [0.71 - 0.7549]:</label>
+            <input type="number" id="X" class="form-control" value="0.74832" min="0.71" max="0.7549" step="any">
 
-  <!-- Option 2: Separate Popper and Bootstrap JS -->
-  <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
+            <label for="Z">Z (dex) [0.0001 - 0.02]:</label>
+            <input type="number" id="Z" class="form-control" value="0.00668" min="0.0001" max="0.02" step="any">
 
-    <br>
-    </br>
-    <h2 style="text-align:center;">
-      Generate the V band light curves of BL Her stars</h2>
+            <label for="p">Period (days) [0.1 - 2.0]:</label>
+            <input type="number" id="p" class="form-control" value="" min="0.1" max="2.0" step="0.0001">
 
-    <div class="container mt-5" style="background-color: #f9f9f9; padding: 20px; border-radius: 10px;">
-      <p style="font-size: 18px;">Please input the values of mass, luminosity, temperature, chemical composition (X,Z) and period in the specified format <br>
-      It should be noted that the ANN model is an interpolator and can only predict the light curves of BL Her stars with parameters within the original grid of models. <br>
-      The respective range of parameters are provided against the input boxes </p>
-    
+            <button type="submit" class="btn btn-primary btn-custom">Predict</button>
+            <button type="reset" class="btn btn-secondary btn-custom">Reset</button>
+        </form>
 
+        <p class="text-danger text-center mt-2"><strong>** Please reset the form before entering a new set of parameters. **</strong></p>
+        <p class="text-center">Modify the period to explore different light curves.</p>
 
-    <form id="input-params" action="/" method="get">
-      <label for="m"> M : </label>
-      <input type="number" id='m' step='any' name="m" value="0.61" min="0.5" max="0.8" step="any"> M<sub>&#9737</sub> [0.5 - 0.8 M<sub>&#9737</sub> ]  <br \>
+        <div class="mt-4" id="myDiv"></div>
+    </div>
 
-      <label for="l"> L : </label>
-      <input type="number" id="l" step='any' name="l" value="1.54" min="1.49" max="2.02" step="any"> dex [1.49 - 2.02 dex ] <br \>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script>$(function() { $("#footer-placeholder").load("footer.html"); });</script>
 
-      <label for="t"> T : </label>
-      <input type="number" id="t" step='any' name="t" value="6900" min="5200" max="7200" step="any"> K [5200 - 7200 K]<br \>
-
-      <label for="X"> X : </label>
-      <input type="number" id="X" step='any' name="X" value="0.74832" min="0.71" max="0.7549" step="any"> dex [0.71 - 0.7549 dex] <br \>
-
-      <label for="Z"> Z : </label>
-      <input type="number" id="Z" step='any' name="Z" value="0.00668" min="0.0001" max="0.02" step="any"> dex [0.0001 - 0.02 dex]<br \>
-      
-      <label for="p"> P : </label>
-      <input type="number" id="p" name="p" value="" min="0.01" max="2.2" step="0.0001"> day [0.1 - 2.0 day]<br \>
-
-      <input type="submit" value="Predict">
-      <input type="reset" value="Reset"><br \>
-    </form>
-    <b>
-      ** Please Reset the form before submitting the next set of parameters. **
-    </b><br>
-    User may change the value of the period to get the light curve of the star with the desired period. <br>  
-  </div>
-
-<script>
-  function get_period_fundamental(M, L, T, X, Z) {
-  var L_period = 11.347 - 0.58 * Math.log10(M) + 0.860 * L - 3.43 * Math.log10(T) + 0.024 * Math.log10(Z);
-  var L_p_plus = (11.347 + 0.006) - (0.58 + 0.02) * Math.log10(M) + (0.860 + 0.003) * L - (3.43 + 0.01) * Math.log10(T) + (0.024 + 0.002) * Math.log10(Z);
-  var L_p_minus = (11.347 - 0.006) - (0.58 - 0.02) * Math.log10(M) + (0.860 - 0.003) * L - (3.43 - 0.01) * Math.log10(T) + (0.024 - 0.002) * Math.log10(Z);
-  var L_dp = Math.pow(10, L_p_plus) - Math.pow(10, L_period);
-  var L_period = Math.pow(10, L_period);
-  return [L_period, L_dp];
-}
-document.getElementById('input-params').addEventListener("submit", 
-  function(event) {
-    event.preventDefault();
-    var m = document.getElementById('m').value;
-    var l = document.getElementById('l').value;
-    var t = document.getElementById('t').value;
-    var X = document.getElementById('X').value;
-    var Z = document.getElementById('Z').value;
-    var p = document.getElementById('p').value;
-    var get_period = document.getElementsByName('p')[0].value;
-    if (get_period == "") {
-      var period = get_period_fundamental(m, l, t, X, Z);
-      document.getElementById('p').value = period[0].toFixed(4);
-      // document.getElementById('p').step = period[1];
-    }
-    else {
-      document.getElementById('p').value = p
-      // document.getElementById('p').step = 0.0001;
-    }
-  }
-);
-
-</script>
-
-
-<!-- The code block -->
-  <div class="container mt-5" id="myDiv"></div>
-  <script>
-
-    let model;
-    (async function () {
-      model = await tf.loadLayersModel("./models/tfjs_Vband/model.json");
-      console.log("Model loaded");
-    })();
-
-    
-    document.getElementById("input-params").addEventListener("submit", function (event) {
-      event.preventDefault();
-      var m = document.getElementById("m").value;
-      var l = document.getElementById("l").value;
-      var t = document.getElementById("t").value;
-      var X = document.getElementById("X").value;
-      var Z = document.getElementById("Z").value;
-      var p = document.getElementById("p").value;
-      const myArr = [m, l, t, X, Z, p];
-      const myScaledArr = [(myArr[0] - 0.6052238805970149) / 0.07728331690286158, (myArr[1] - 1.7816044776119402) / 0.14408240379875886, (myArr[2] - 6324.925373134329) / 357.06044111597606, (myArr[3] - 0.7437242537313433) / 0.012968669529618546, (myArr[4] - 0.005029477611940301) / 0.005628716724611099, (Math.log10(myArr[5]) + 0.07894029850746269) / 0.17069730830507393];
-      const tensorA = tf.tensor(myScaledArr, [1, 6], 'float32');
-      var prediction = model.predict(tensorA);
-      prediction = prediction.reshape([1000,]).arraySync();
-      const phase = tf.linspace(0, 2, 2000).arraySync();
-      var pred2d = tf.tensor([prediction, prediction]);
-      pred2d = pred2d.reshape([2000,]).arraySync();
-
-      var data_new = [{
-        x: phase,
-        y: pred2d,
-        type: 'scatter'
-      }];
-
-      var layout = {
-        title: 'V band light curve',
-        xaxis: {
-          title: 'Phase',
-          showgrid: false,
-          zeroline: false
-        },
-        yaxis: {
-          title: 'Magnitude',
-          showline: false,
-          zeroline: false,
-          autorange: 'reversed'
+    <script>
+        function get_period_fundamental(M, L, T, X, Z) {
+            var L_period = 11.347 - 0.58 * Math.log10(M) + 0.860 * L - 3.43 * Math.log10(T) + 0.024 * Math.log10(Z);
+            return Math.pow(10, L_period).toFixed(4);
         }
-      };
-      Plotly.newPlot('myDiv', data_new, layout);
 
-      document.getElementById("input-params").addEventListener("reset", function (event) {
-        event.preventDefault();
-        document.getElementById("myDiv").innerHTML = "";
-        document.getElementById("p").value = "";
-      });
-    });
-  </script>
+        document.getElementById('input-params').addEventListener("submit", function(event) {
+            event.preventDefault();
+            let m = parseFloat(document.getElementById('m').value);
+            let l = parseFloat(document.getElementById('l').value);
+            let t = parseFloat(document.getElementById('t').value);
+            let X = parseFloat(document.getElementById('X').value);
+            let Z = parseFloat(document.getElementById('Z').value);
+            let p = document.getElementById('p').value;
 
+            if (!p) {
+                document.getElementById('p').value = get_period_fundamental(m, l, t, X, Z);
+            }
+
+            if (model) {
+                let inputArr = [m, l, t, X, Z, Math.log10(parseFloat(document.getElementById('p').value))];
+                let scaledArr = [
+                    (inputArr[0] - 0.605) / 0.077,
+                    (inputArr[1] - 1.78) / 0.14,
+                    (inputArr[2] - 6325) / 357,
+                    (inputArr[3] - 0.744) / 0.013,
+                    (inputArr[4] - 0.005) / 0.0056,
+                    (inputArr[5] + 0.079) / 0.171
+                ];
+
+                let tensorInput = tf.tensor(scaledArr, [1, 6], 'float32');
+                let prediction = model.predict(tensorInput).reshape([1000,]).arraySync();
+                let phase = tf.linspace(0, 2, 2000).arraySync();
+                let plotData = [{ x: phase, y: [...prediction, ...prediction], type: 'scatter' }];
+
+                Plotly.newPlot('myDiv', plotData, {
+                    title: 'V-Band Light Curve',
+                    xaxis: { title: 'Phase', showgrid: false, zeroline: false },
+                    yaxis: { title: 'Magnitude', autorange: 'reversed' }
+                });
+            }
+        });
+
+        document.getElementById("input-params").addEventListener("reset", function() {
+            document.getElementById("myDiv").innerHTML = "";
+            document.getElementById("p").value = "";
+        });
+
+        let model;
+        (async function() {
+            model = await tf.loadLayersModel("./models/tfjs_Vband/model.json");
+            console.log("Model loaded");
+        })();
+    </script>
 
 </body>
-  <!--footer-->
-  <div id="footer-placeholder">
-
-  </div>
-  <script>
-    $(function(){
-      $("#footer-placeholder").load("footer.html");
-    });
-    </script>
-    <!-- end of footer -->
 </html>

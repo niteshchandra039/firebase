@@ -1,52 +1,87 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(163, 164, 238); font-weight: bold;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">ANN Interpolator </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="demo.html">Demo</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Generate light curves
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="iband.html">I band</a></li>
-              <li><a class="dropdown-item" href="vband.html">V band</a></li>
-              <li><a class="dropdown-item" href="download_iband.html">Download I band</a></li>
-              <li><a class="dropdown-item" href="download_vband.html">Download V band</a></li>
-            </ul>
-          </li>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4A69BD;">
+  <div class="container-fluid">
+    <a class="navbar-brand fs-4 fw-bold" href="/">ANN Interpolator</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active fs-5" aria-current="page" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="demo.html">Demo</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fs-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Generate light curves
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="iband.html">I band</a></li>
+            <li><a class="dropdown-item" href="vband.html">V band</a></li>
+            <li><a class="dropdown-item" href="download_iband.html">Download I band</a></li>
+            <li><a class="dropdown-item" href="download_vband.html">Download V band</a></li>
+          </ul>
+        </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              BL Her light curves
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <!-- <li><a class="dropdown-item" href="iband.html">I band</a></li> -->
-              <li><a class="dropdown-item" href="blh_vband.html">V band</a></li>
-              <!-- <li><a class="dropdown-item" href="download_iband.html">Download I band</a></li> -->
-              <li><a class="dropdown-item" href="blh_download_vband.html">Download V band</a></li>
-            </ul>
-          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fs-5" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            BL Her light curves
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+            <li><a class="dropdown-item" href="blh_vband.html">V band</a></li>
+            <li><a class="dropdown-item" href="blh_download_vband.html">Download V band</a></li>
+          </ul>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link active" href="about_new.html"> About Author</a>
-          </li>
-        </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
-      </div>
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="about_new.html">About Author</a>
+        </li>
+      </ul>
+
+      <!-- Search Button -->
+      <!-- <form class="d-flex ms-lg-4"> -->
+        <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+        <!-- <button class="btn btn-outline-light" type="submit"> -->
+          <!-- <i class="bi bi-search"></i> Add Bootstrap Icon for search -->
+        <!-- </button> -->
+      <!-- </form> -->
+
     </div>
-  </nav>
+  </div>
+</nav>
+
+<!-- Add Bootstrap Icons for dropdown hover effect -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var dropdowns = document.querySelectorAll('.nav-item.dropdown');
+    dropdowns.forEach(function (dropdown) {
+      dropdown.addEventListener('mouseover', function () {
+        this.querySelector('.dropdown-menu').classList.add('show');
+      });
+      dropdown.addEventListener('mouseout', function () {
+        this.querySelector('.dropdown-menu').classList.remove('show');
+      });
+    });
+  });
+</script>
+
+<head>
+  <style>
+    /* Your custom CSS here */
+    .navbar {
+      background-color: #4A69BD;
+    }
+    .navbar .nav-link:hover {
+      color: #f1f1f1;
+    }
+    .nav-item.dropdown:hover > .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>

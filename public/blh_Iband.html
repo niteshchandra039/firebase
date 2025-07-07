@@ -10,26 +10,11 @@
     <title>I-Band Interpolator for BL Her Stars</title>
 
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-control {
-            margin-bottom: 10px;
-        }
-        .btn-custom {
-            width: 100%;
-            margin-top: 10px;
-        }
+        body { background-color: #f8f9fa; }
+        .container { background: rgba(255, 255, 255, 0); padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); max-width: 95%; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        .form-control, .form-range { margin-bottom: 10px; }
+        #myDiv { min-height: 400px; }
     </style>
 </head>
 
@@ -62,7 +47,7 @@
             <input type="number" id="Z" class="form-control" value="0.00668" min="0.0001" max="0.02" step="any">
 
             <label for="p">Period (days) [0.1 - 2.0]:</label>
-            <input type="number" id="p" class="form-control" value="" min="0.1" max="2.0" step="0.0001">
+            <input type="number" id="p" class="form-control" value="0.1" min="0.1" max="2.0" step="0.0001">
 
             <button type="submit" class="btn btn-primary btn-custom">Predict</button>
             <button type="reset" class="btn btn-secondary btn-custom">Reset</button>
@@ -95,13 +80,17 @@
                 let scaledArr = [
                     (inputArr[0] - 0.67114) / 0.09722,
                     (inputArr[1] - 2.12917) / 0.14453,
-                    (inputArr[2] - 5979.57116) / 326.86564,
+                    (inputArr[2] - 5979) / 326,
                     (inputArr[3] - 0.73957) / 0.01240,
                     (inputArr[4] - 0.00470) / 0.00488,
                     (inputArr[5] - 2.1414) / 0.83837
                 ];
-
+                // Ensure the model is loaded before making predictions
+                console.log("Input parameters:", scaledArr);
+                console.log("Model is ready for prediction");
                 let tensorInput = tf.tensor(scaledArr, [1, 6], 'float32');
+                console.log("Tensor input shape:", tensorInput.shape);
+                console.log("Tensor input data:", tensorInput.arraySync());
                 let prediction = model.predict(tensorInput).reshape([1000,]).arraySync();
                 let phase = tf.linspace(0, 2, 2000).arraySync();
                 let plotData = [{ x: phase, y: [...prediction, ...prediction], type: 'scatter' }];
@@ -127,4 +116,11 @@
     </script>
 
 </body>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script>$(function () { $("#footer-placeholder").load("footer.html"); });</script>
+
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </html>

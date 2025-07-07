@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <title>V-Band Interpolator</title>
+    <title>I-Band Interpolator for BL Her Stars</title>
 
     <style>
         body {
@@ -39,9 +39,10 @@
     <script>$(function() { $("#nav-placeholder").load("nav.html"); });</script>
 
     <div class="container mt-4">
-        <h2>Generate V-Band Light Curves of BL Her Stars</h2>
+    <h1> **THIS PAGE IS CURRENTLY IN DEVELOPEMENT. THE PREDICTED LIGHT CURVES ARE NOT CORRECT.** </h1>
+        <h2>Generate I-Band Light Curves of BL Her Stars</h2>
         <p class="text-muted text-center">
-            Enter the stellar parameters to interpolate the V-band light curve. The model is trained within a specific range, so predictions are valid only for parameters within the given limits.
+            Enter the stellar parameters to interpolate the I-band light curve. The model is trained within a specific range, so predictions are valid only for parameters within the given limits.
         </p>
 
         <form id="input-params">
@@ -78,10 +79,6 @@
     <script>$(function() { $("#footer-placeholder").load("footer.html"); });</script>
 
     <script>
-        function get_period_fundamental(M, L, T, X, Z) {
-            var L_period = 11.347 - 0.58 * Math.log10(M) + 0.860 * L - 3.43 * Math.log10(T) + 0.024 * Math.log10(Z);
-            return Math.pow(10, L_period).toFixed(4);
-        }
 
         document.getElementById('input-params').addEventListener("submit", function(event) {
             event.preventDefault();
@@ -90,21 +87,18 @@
             let t = parseFloat(document.getElementById('t').value);
             let X = parseFloat(document.getElementById('X').value);
             let Z = parseFloat(document.getElementById('Z').value);
-            let p = document.getElementById('p').value;
+            let p = parseFloat(document.getElementById('p').value);
 
-            if (!p) {
-                document.getElementById('p').value = get_period_fundamental(m, l, t, X, Z);
-            }
 
             if (model) {
-                let inputArr = [m, l, t, X, Z, Math.log10(parseFloat(document.getElementById('p').value))];
+                let inputArr = [m, l, t, X, Z, p];
                 let scaledArr = [
-                    (inputArr[0] - 0.605) / 0.077,
-                    (inputArr[1] - 1.78) / 0.14,
-                    (inputArr[2] - 6325) / 357,
-                    (inputArr[3] - 0.744) / 0.013,
-                    (inputArr[4] - 0.005) / 0.0056,
-                    (inputArr[5] + 0.079) / 0.171
+                    (inputArr[0] - 0.67114) / 0.09722,
+                    (inputArr[1] - 2.12917) / 0.14453,
+                    (inputArr[2] - 5979.57116) / 326.86564,
+                    (inputArr[3] - 0.73957) / 0.01240,
+                    (inputArr[4] - 0.00470) / 0.00488,
+                    (inputArr[5] - 2.1414) / 0.83837
                 ];
 
                 let tensorInput = tf.tensor(scaledArr, [1, 6], 'float32');
@@ -113,7 +107,7 @@
                 let plotData = [{ x: phase, y: [...prediction, ...prediction], type: 'scatter' }];
 
                 Plotly.newPlot('myDiv', plotData, {
-                    title: 'V-Band Light Curve',
+                    title: 'I-Band Light Curve',
                     xaxis: { title: 'Phase', showgrid: false, zeroline: false },
                     yaxis: { title: 'Magnitude', autorange: 'reversed' }
                 });
@@ -127,7 +121,7 @@
 
         let model;
         (async function() {
-            model = await tf.loadLayersModel("./models/tfjs_Vband/model.json");
+            model = await tf.loadLayersModel("./models/BLH/web_model_blh_I/model.json");
             console.log("Model loaded");
         })();
     </script>
